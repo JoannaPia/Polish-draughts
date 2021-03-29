@@ -1,0 +1,15 @@
+/Users/kt/RiderProjects/Warcaby/Warcaby/bin/Debug/net5.0/Warcaby.deps.json
+/Users/kt/RiderProjects/Warcaby/Warcaby/bin/Debug/net5.0/Warcaby.runtimeconfig.json
+/Users/kt/RiderProjects/Warcaby/Warcaby/bin/Debug/net5.0/Warcaby.runtimeconfig.dev.json
+/Users/kt/RiderProjects/Warcaby/Warcaby/bin/Debug/net5.0/Warcaby.dll
+/Users/kt/RiderProjects/Warcaby/Warcaby/bin/Debug/net5.0/ref/Warcaby.dll
+/Users/kt/RiderProjects/Warcaby/Warcaby/bin/Debug/net5.0/Warcaby.pdb
+/Users/kt/RiderProjects/Warcaby/Warcaby/obj/Debug/net5.0/Warcaby.csprojAssemblyReference.cache
+/Users/kt/RiderProjects/Warcaby/Warcaby/obj/Debug/net5.0/Warcaby.GeneratedMSBuildEditorConfig.editorconfig
+/Users/kt/RiderProjects/Warcaby/Warcaby/obj/Debug/net5.0/Warcaby.AssemblyInfoInputs.cache
+/Users/kt/RiderProjects/Warcaby/Warcaby/obj/Debug/net5.0/Warcaby.AssemblyInfo.cs
+/Users/kt/RiderProjects/Warcaby/Warcaby/obj/Debug/net5.0/Warcaby.csproj.CoreCompileInputs.cache
+/Users/kt/RiderProjects/Warcaby/Warcaby/obj/Debug/net5.0/Warcaby.dll
+/Users/kt/RiderProjects/Warcaby/Warcaby/obj/Debug/net5.0/ref/Warcaby.dll
+/Users/kt/RiderProjects/Warcaby/Warcaby/obj/Debug/net5.0/Warcaby.pdb
+/Users/kt/RiderProjects/Warcaby/Warcaby/obj/Debug/net5.0/Warcaby.genruntimeconfig.cache
