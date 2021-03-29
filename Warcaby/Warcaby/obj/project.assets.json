@@ -8,23 +8,23 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Sebastian\\.nuget\\packages\\": {},
+    "C:\\Users\\Ewelina\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Sebastian\\source\\repos\\Warcaby\\Warcaby\\Warcaby.csproj",
+      "projectUniqueName": "C:\\Users\\Ewelina\\Desktop\\CODECOOL\\PROJEKTY\\Warcaby\\Polish-draughts\\Warcaby\\Warcaby\\Warcaby.csproj",
       "projectName": "Warcaby",
-      "projectPath": "C:\\Users\\Sebastian\\source\\repos\\Warcaby\\Warcaby\\Warcaby.csproj",
-      "packagesPath": "C:\\Users\\Sebastian\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Sebastian\\source\\repos\\Warcaby\\Warcaby\\obj\\",
+      "projectPath": "C:\\Users\\Ewelina\\Desktop\\CODECOOL\\PROJEKTY\\Warcaby\\Polish-draughts\\Warcaby\\Warcaby\\Warcaby.csproj",
+      "packagesPath": "C:\\Users\\Ewelina\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Ewelina\\Desktop\\CODECOOL\\PROJEKTY\\Warcaby\\Polish-draughts\\Warcaby\\Warcaby\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Sebastian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Ewelina\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

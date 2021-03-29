@@ -26,7 +26,7 @@ There is ToString() method that overrides built-in method. This method should ma
 There is RemovePawn() method that removes pawn with given position from.
 There is MovePawn() method that moves pawn with given position from one field to another.
     */
-    class Pawn
+    partial class Pawn
     {
 
         private bool isWhite;
