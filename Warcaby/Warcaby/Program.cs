@@ -188,6 +188,9 @@ Method CheckForWinner() checks also for draws.
             Board b = new Board();
             b.InitBoard();
             Console.Write(b.ToString());
+            AskForMove move = new AskForMove();
+            (int?, int?) inputCoordinates = move.AskUserForCoordinates();
+            Console.Out.WriteLine("The user entered the following coordinates: {0}", inputCoordinates);
         }
     }
 }
