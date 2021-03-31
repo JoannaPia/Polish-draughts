@@ -26,7 +26,7 @@ There is ToString() method that overrides built-in method. This method should ma
 There is RemovePawn() method that removes pawn with given position from.
 There is MovePawn() method that moves pawn with given position from one field to another.
     */
-    class Pawn
+    public class Pawn
     {
 
         private bool isWhite;
@@ -59,9 +59,9 @@ There is MovePawn() method that moves pawn with given position from one field to
     }
 
 
-    class Board
+    public class Board
     {
-        private Pawn[,] board;
+        public Pawn[,] board;
         private int size;
         public Board ()
         {
@@ -188,9 +188,13 @@ Method CheckForWinner() checks also for draws.
             Board b = new Board();
             b.InitBoard();
             Console.Write(b.ToString());
+            Pawn[,] boardArrey = b.board;
             AskForMove move = new AskForMove();
-            (int?, int?) inputCoordinates = move.AskUserForCoordinates();
-            Console.Out.WriteLine("The user entered the following coordinates: {0}", inputCoordinates);
+            
+            //(int?, int?) inputCoordinates = move.AskUserForCoordinates();
+            //Console.Out.WriteLine("The user entered the following coordinates: {0}", inputCoordinates);
+            
+            move.MakeMove(boardArrey, 10);
         }
     }
 }
