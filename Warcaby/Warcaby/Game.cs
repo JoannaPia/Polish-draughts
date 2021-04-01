@@ -19,20 +19,23 @@ Method CheckForWinner() checks also for draws.
     {
         private Board board;
         private bool isFinished = false;
+        private int player = 2;
 
      
         public void Start()
         {
             board = new Board();
-            while (!isFinished) 
+            while (!isFinished)
             {
                 Round();
+                Console.Clear();
                 Console.Out.WriteLine(board.ToString());
             }
         }
 
         public void Round()
         {
+            player = player == 2 ? 1 : 2;
             TryToMakeMove();
             CheckForWinner();
         }
@@ -40,7 +43,7 @@ Method CheckForWinner() checks also for draws.
         public void TryToMakeMove()
         {
             AskForMove move = new AskForMove();
-            (int, int)[] moveCoordinates = move.MakeMove(board.board, board.Size);
+            (int, int)[] moveCoordinates = move.MakeMove(board.board, board.Size, player);
             board.MovePawn(moveCoordinates[0], moveCoordinates[1]);
             
         }
