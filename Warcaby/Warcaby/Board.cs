@@ -91,14 +91,17 @@ namespace Warcaby
             return b;
         }
 
-        public void RemovePawn()
+        public void RemovePawn((int row, int col) pawnCoordinate)
         {
-
+            board[pawnCoordinate.row, pawnCoordinate.col] = null;
         }
 
-        public void MovePawn()
+        public void MovePawn((int row, int col) pawnCoordinate, (int row, int col) nextCoordinate)
         {
 
+            board[nextCoordinate.row, nextCoordinate.col] = board[pawnCoordinate.row, pawnCoordinate.col];
+            board[nextCoordinate.row, nextCoordinate.col].coordinates = Tuple.Create(nextCoordinate.row, nextCoordinate.col);
+            board[pawnCoordinate.row, pawnCoordinate.col] = null;
         }
 
     }

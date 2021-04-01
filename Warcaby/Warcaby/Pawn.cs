@@ -18,7 +18,7 @@ namespace Warcaby
             set { isCrowned = value; }
         }
 
-        Tuple<int, int> coordinates;
+        public Tuple<int, int> coordinates { get; set; }
 
         public Pawn(bool _isWhite, int x, int y)
         {
