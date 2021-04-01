@@ -5,54 +5,66 @@ namespace Warcaby
 {
     public class AskForMove
     {
-        public void MakeMove(Pawn[,] fieldsArray, int boardSize = 10, int player = 1)
+        private readonly Messages _message = new Messages();
+        
+        
+        public (int, int)[] MakeMove(Pawn[,] fieldsArray, int boardSize = 10, int player = 1)
         {
             (int, int) pawnToMove;
             (int, int) fieldToMoveTo;
-            int count = 0;
+            (int, int)[] availableMoves;
+            (int, int)[] result;
+            string messageText;
+            bool isValidChoice;
+            bool isEmptyList;
 
+            //Player selects pawn
+            _message.WriteMessage("choosePawn");
             do
             {
                 pawnToMove = AskUserForCoordinates(boardSize, player);
-            } while (!ValidPawn(fieldsArray, pawnToMove, player));
+                availableMoves = GetPosibleMoves(pawnToMove, player, boardSize, fieldsArray);
+                isValidChoice = ValidPawn(fieldsArray, pawnToMove, player);
+                isEmptyList = availableMoves.Length == 0;
+                messageText = !isValidChoice ? "wrongPawn" : (isEmptyList ? "noMove" : "whereToPlace");
+                _message.WriteMessage(messageText);
+            } while (!isValidChoice || isEmptyList);
 
-            (int, int)[] availableMoves = GetPosibleMoves(pawnToMove, player, boardSize, fieldsArray);
-            
+
+            //Player decides where to move his pawn
             do
             {
-                if (count > 0)
-                    Console.Out.WriteLine("This move is unavailable");
                 fieldToMoveTo = AskUserForCoordinates(boardSize, player);
-                count++;
-            } while (!availableMoves.Contains(fieldToMoveTo));
+                isValidChoice = availableMoves.Contains(fieldToMoveTo);
+                if (!isValidChoice)
+                    _message.WriteMessage("unavailableMove");
+            } while (!isValidChoice);
 
             Console.Out.WriteLine("Your pawn will move to {0}", fieldToMoveTo);
+
+            return result = new (int, int)[2] {pawnToMove, fieldToMoveTo};
         }
         
         
-        public (int, int) AskUserForCoordinates (int boardSize = 10, int player = 1)
+        private (int, int) AskUserForCoordinates (int boardSize = 10, int player = 1)
         {
             (int?, int?) pawnCoordinates;
-            
-            Console.Out.WriteLine("Please enter your pawn coordinates");
-            
+
             do
             {
                 string userInput = Console.ReadLine();
-                pawnCoordinates = ValidateInput(userInput, player, boardSize);
+                pawnCoordinates = ValidateInput(userInput, boardSize);
             } while (pawnCoordinates == (null, null));
-
-            Console.Out.WriteLine(pawnCoordinates);
 
             return  ConverrtNullableInts(pawnCoordinates);
         }
 
         
-        private (int?, int?) ValidateInput(string userInput, int player, int boardSize)
+        private (int?, int?) ValidateInput(string userInput, int boardSize)
         {
             int firstLetterAsciiCode = 65;
             int numberZeroAciiCode = 49;
-            int alphabetLength = 25;
+            //int alphabetLength = 25;
             int? col, row;
 
 
@@ -66,40 +78,40 @@ namespace Warcaby
 
                 if (col >= boardSize || col < 0 || row >= boardSize || row < 0)
                 {
-                    (row, col) = nullCoordinates();
+                    _message.WriteMessage("outOfRange");
+                    (row, col) = (null, null);
                 }
             }
             else
             {
-                (row, col) = nullCoordinates();
+                _message.WriteMessage("invalidInput");
+                (row, col) = (null, null);
             }
 
             return (row, col);
         }
 
-        
+        /*
         private (int?, int?) nullCoordinates()
         {
             Console.Out.WriteLine("Invalid input! Please enter correct coordinates");
             return (null, null);
         }
+        */
         
         
-        private (int, int) ConverrtNullableInts((int?, int?) coordinates)
+        private (int, int) ConverrtNullableInts((int? rowNull, int? colNull) coordinates)
         {
-            (int? rowNull, int? colNull) = coordinates;
-
-            var colConverted = colNull ?? default(int); //colConverted = colNull is not null ? colNum : default(int);
-            var rowConverted = rowNull ?? default(int);
+            var colConverted = coordinates.colNull ?? default(int); //colConverted = colNull is not null ? colNum : default(int);
+            var rowConverted = coordinates.rowNull ?? default(int);
 
             return (rowConverted, colConverted);
         }
         
      
-        private bool ValidPawn(Pawn[,] board, (int, int) coordinates, int player = 1)
+        private bool ValidPawn(Pawn[,] board, (int row, int col) coordinates, int player = 1)
         {
-            (int row, int col) = coordinates;
-            Pawn pawn = board[row, col];
+            Pawn pawn = board[coordinates.row, coordinates.col];
 
             if (pawn is null)
                 return false;
@@ -115,33 +127,31 @@ namespace Warcaby
         }
         
         
-        private (int, int)[] GetPosibleMoves((int, int) pawnLocation, int player, int bordSize, Pawn[,] firldsArray)
+        private (int, int)[] GetPosibleMoves((int pawnRow, int pawnCol) pawnLocation, int player, int bordSize, Pawn[,] firldsArray)
         {
-            (int pawnRow, int pawnCol) = pawnLocation; ;
             (int, int)[] possibleCoordinates;
 
-            int newRow = player == 1 ? pawnRow - 1 : pawnRow + 1;
-            (int, int) rightMoveField = (newRow, pawnCol + 1);
-            (int, int) leftMoveField = (newRow, pawnCol - 1);
+            int newRow = player == 1 ? pawnLocation.pawnRow - 1 : pawnLocation.pawnRow + 1;
+            (int, int) rightMoveField = (newRow, pawnLocation.pawnCol + 1);
+            (int, int) leftMoveField = (newRow, pawnLocation.pawnCol - 1);
 
-            bool rMoveAvailable = pawnCol < bordSize - 1 && isAnEmptyField(rightMoveField, firldsArray);
-            bool lMoveAvailable = pawnCol > 0 && isAnEmptyField(leftMoveField, firldsArray);
+            bool rMoveAvailable = pawnLocation.pawnCol < bordSize - 1 && isAnEmptyField(rightMoveField, firldsArray);
+            bool lMoveAvailable = pawnLocation.pawnCol > 0 && isAnEmptyField(leftMoveField, firldsArray);
 
             if (newRow >= bordSize || newRow < 0 || (!rMoveAvailable && !lMoveAvailable))
                 return possibleCoordinates = new (int, int)[] { };
             else if (rMoveAvailable && !lMoveAvailable)
                 return possibleCoordinates = new (int, int)[] {rightMoveField};
-            else if (lMoveAvailable && !rMoveAvailable)
+            else if (!rMoveAvailable)
                 return possibleCoordinates = new (int, int)[] {leftMoveField};
             else
                 return possibleCoordinates = new (int, int)[] {leftMoveField, rightMoveField};
         }
 
         
-        private bool isAnEmptyField((int, int) fieldCoordinates, Pawn[,] firldsArray)
+        private bool isAnEmptyField((int row, int col) fieldCoordinates, Pawn[,] firldsArray)
         {
-            (int row, int col) = fieldCoordinates;
-            return (firldsArray[row, col] is null) ? true : false;
+            return (firldsArray[fieldCoordinates.row, fieldCoordinates.col] is null) ? true : false;
         }
     }
 }

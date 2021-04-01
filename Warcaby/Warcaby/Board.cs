@@ -103,7 +103,6 @@ namespace Warcaby
             board[nextCoordinate.row, nextCoordinate.col].coordinates = Tuple.Create(nextCoordinate.row, nextCoordinate.col);
             board[pawnCoordinate.row, pawnCoordinate.col] = null;
         }
-
     }
 
 }
