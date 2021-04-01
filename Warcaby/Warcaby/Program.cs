@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace Warcaby
 {
-<<<<<<< HEAD
-=======
+
     /*
     class Node
     {
@@ -28,6 +27,8 @@ There is ToString() method that overrides built-in method. This method should ma
 There is RemovePawn() method that removes pawn with given position from.
 There is MovePawn() method that moves pawn with given position from one field to another.
     */
+    
+    /*
     public class Pawn
     {
 
@@ -80,7 +81,7 @@ There is MovePawn() method that moves pawn with given position from one field to
                 {
                     if (i == 0 || i == 1 || i == size - 2 || i == size - 1)
                     {
-                        /* sprawdzanie czy wiersz (czyli rzad planszy) jest parzysty*/
+                        //sprawdzanie czy wiersz (czyli rzad planszy) jest parzysty
                         if (i % 2 == 0) 
                         {
                             if (j % 2 == 0)
@@ -95,7 +96,7 @@ There is MovePawn() method that moves pawn with given position from one field to
                         }
                         else
                         {
-                            /* sprawdzanie czy jest nieparzysty*/
+                            //sprawdzanie czy jest nieparzysty
                             if (j % 2 == 1)
                             {
                                 if (i > size / 2)
@@ -159,51 +160,48 @@ There is a method CheckForWinner() that checks after each round is there an a wi
 Method CheckForWinner() checks also for draws.
         */
 
-        public void Start()
-        {
-            
-        }
-
-        public void Round()
-        {
-
-        }
-
-        public void TryToMakeMove()
-        {
-
-        }
-
-        public void CheckForWinner()
-        {
-
-        }
-
+/*
+    public void Start()
+    {
         
     }
 
->>>>>>> c01e1dc0e2102372ce0186ae26fe7055ac080586
-    class Program
+    public void Round()
     {
-        static void Main(string[] args)
-        {
-<<<<<<< HEAD
-            Game game = new Game();
-            game.Start();
 
-=======
-            Console.WriteLine("Hello World!");
-            Board b = new Board();
-            b.InitBoard();
-            Console.Write(b.ToString());
-            Pawn[,] boardArrey = b.board;
->>>>>>> c01e1dc0e2102372ce0186ae26fe7055ac080586
-            AskForMove move = new AskForMove();
-            
-            //(int?, int?) inputCoordinates = move.AskUserForCoordinates();
-            //Console.Out.WriteLine("The user entered the following coordinates: {0}", inputCoordinates);
-            
-            move.MakeMove(boardArrey, 10);
-        }
     }
+
+    public void TryToMakeMove()
+    {
+
+    }
+
+    public void CheckForWinner()
+    {
+
+    }
+
+    
+}
+*/
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Game game = new Game();
+        game.Start();
+        //Board b = new Board();
+        //b.InitBoard();
+        //Console.Write(b.ToString());
+        //Pawn[,] boardArrey = b.board;
+        //AskForMove move = new AskForMove();
+        
+        //(int?, int?) inputCoordinates = move.AskUserForCoordinates();
+        //Console.Out.WriteLine("The user entered the following coordinates: {0}", inputCoordinates);
+        
+        //move.MakeMove(boardArrey, 10);
+    }
+}
+
 }

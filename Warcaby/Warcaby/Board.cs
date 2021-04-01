@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Warcaby
 {
-    class Board
+    public class Board
     {
         private Pawn[,] _board;
         private int size;

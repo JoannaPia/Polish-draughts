@@ -2,7 +2,7 @@ using System;
 
 namespace Warcaby
 {
-    class Pawn
+    public class Pawn
     {
         private bool isWhite;
         public bool IsWhite

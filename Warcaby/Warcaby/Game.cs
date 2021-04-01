@@ -38,7 +38,8 @@ Method CheckForWinner() checks also for draws.
 
         public void TryToMakeMove()
         {
-
+            AskForMove move = new AskForMove();
+            move.MakeMove(board.board, board.Size);
         }
 
         public void CheckForWinner()
