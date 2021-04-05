@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Warcaby
@@ -28,7 +29,7 @@ Method CheckForWinner() checks also for draws.
             while (!isFinished)
             {
                 Round();
-                Console.Clear();
+                // Console.Clear();
                 Console.Out.WriteLine(board.ToString());
             }
         }
@@ -43,9 +44,43 @@ Method CheckForWinner() checks also for draws.
         public void TryToMakeMove()
         {
             AskForMove move = new AskForMove();
-            (int, int)[] moveCoordinates = move.MakeMove(board.board, board.Size, player);
+            (int row, int col)[] moveCoordinates = move.MakeMove(board.board, board.Size, player);
+
+            if (Math.Abs(moveCoordinates[0].row - moveCoordinates[1].row) == 2 && Math.Abs(moveCoordinates[0].col - moveCoordinates[1].col) == 2)
+            {
+                (int, int) pawnToCapture;
+                if (board.board[moveCoordinates[0].row, moveCoordinates[0].col].IsWhite && (moveCoordinates[0].col - moveCoordinates[1].col == -2))
+                {
+                    pawnToCapture = (moveCoordinates[0].row - 1, moveCoordinates[0].col + 1);
+                }
+                else if (board.board[moveCoordinates[0].row, moveCoordinates[0].col].IsWhite && (moveCoordinates[0].col - moveCoordinates[1].col == 2))
+                {
+                    pawnToCapture = (moveCoordinates[0].row - 1, moveCoordinates[0].col - 1);
+                }
+                else if (!board.board[moveCoordinates[0].row, moveCoordinates[0].col].IsWhite && (moveCoordinates[0].col - moveCoordinates[1].col == -2))
+                {
+                    pawnToCapture = (moveCoordinates[0].row + 1, moveCoordinates[0].col + 1);
+                }
+                else
+                {
+                    pawnToCapture = (moveCoordinates[0].row + 1, moveCoordinates[0].col - 1);
+                }
+                board.RemovePawn(pawnToCapture);
+            }
             board.MovePawn(moveCoordinates[0], moveCoordinates[1]);
             
+        }
+
+        public void MakeMoveOrCapture((int row, int col) pawnCoordinate, (int row, int col) nextPawnCoordinate,
+            bool capture = false)
+        {
+            if (capture)
+            {
+                (int row, int col) pawnToCapture = (pawnCoordinate.row + 1, pawnCoordinate.col + 1);
+                board.RemovePawn(pawnToCapture);
+            }
+           
+            board.MovePawn(pawnCoordinate, nextPawnCoordinate);
         }
 
         public void CheckForWinner()
