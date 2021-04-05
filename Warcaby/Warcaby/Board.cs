@@ -70,25 +70,109 @@ namespace Warcaby
 
         public override string ToString()
         {
-            string b = "";
-            for (int i = 0; i < size; i++)
+            int n = ((size + 1) * 6 - 2);
+            char horizontalLine = '-';
+
+            for (int k = 0; k <= n; k++)
             {
-                for (int j = 0; j < size; j++)
+                Console.Write(horizontalLine);
+            }
+            Console.WriteLine("-");
+
+            Console.Write("|    ");
+            for (int j = 0; j <= (size - 1); j++)
+            {
+                Console.Write("|  " + (char)(j + 65) + "  ");
+            }
+            Console.WriteLine("|");
+
+            for (int k = 0; k <= n; k++)
+            {
+                Console.Write(horizontalLine);
+            }
+            Console.WriteLine("-");
+
+            for (int i = 0; i <= (size - 1); i++)
+            {
+                for (int l = 0; l <= 2; l++)
                 {
-                    if (board[i, j] == null)
-                        //Console.Write("O ");
-                        b += "O ";
+                    if (l % 2 == 1)
+                    {
+                        //row number
+                        if (i <= 8)
+                        {
+                            Console.Write("| " + (i + 1) + "  ");
+                        }
+                        else
+                        {
+                            Console.Write("| " + (i + 1) + " ");
+                        }
+                        //row content
+                        for (int j = 0; j <= (size - 1); j++)
+                        {
+                            if (board[i, j] == null)
+                            {
+                                if ((i % 2 == 1 & j % 2 == 0) | (i % 2 == 0 & j % 2 == 1))
+                                {
+                                    Console.Write("|  -  ");
+                                }
+                                else
+                                {
+                                    Console.Write("|     ");
+                                }
+
+                            }
+                            else
+                            {
+                                if (board[i, j].IsWhite == false)
+                                {
+                                    Console.Write("|  x  ");
+                                }
+                                else
+                                {
+                                    Console.Write("| o o ");
+                                }
+
+                            }
+
+                        }
+                        Console.WriteLine("|");
+                    }
                     else
                     {
-                        string pionek = board[i, j].IsWhite ? "W " : "B ";
-                        //Console.Write(pionek + " ");
-                        b += pionek;
+                        //row start                    
+                        Console.Write("|    ");
+                        //row content
+                        for (int j = 0; j <= (size - 1); j++)
+                        {
+                            if (board[i, j] == null)
+                            {
+                                Console.Write("|     ");
+                            }
+                            else
+                            {
+                                if (board[i, j].IsWhite == false)
+                                {
+                                    Console.Write("| x x ");
+                                }
+                                else
+                                {
+                                    Console.Write("| ooo ");
+                                }
+                            }
+                        }
+                        Console.WriteLine("|");
                     }
-                }
-                b += "\n";
-            }
 
-            return b;
+                }
+                // line dividing the rows
+                for (int k = 0; k <= n; k++)
+                {
+                    Console.Write(horizontalLine);
+                }
+                Console.WriteLine('-');
+            }
+            return "-";
         }
 
         public void RemovePawn((int row, int col) pawnCoordinate)
