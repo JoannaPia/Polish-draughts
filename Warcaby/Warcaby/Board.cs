@@ -130,7 +130,10 @@ namespace Warcaby
                                 }
                                 else
                                 {
-                                    Console.Write("| o o ");
+                                    Console.Write("|");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    Console.Write(" o o ");
+                                    Console.ResetColor();
                                 }
 
                             }
@@ -157,7 +160,10 @@ namespace Warcaby
                                 }
                                 else
                                 {
-                                    Console.Write("| ooo ");
+                                    Console.Write("|");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    Console.Write(" ooo ");
+                                    Console.ResetColor();
                                 }
                             }
                         }
