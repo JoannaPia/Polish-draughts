@@ -169,7 +169,7 @@ namespace Warcaby
             (int, int)[] possibleCoordinatesCapture;
             
             int newRow = player == 1 ? pawnLocation.pawnRow - 2 : pawnLocation.pawnRow + 2;
-            bool rowIsValid = newRow < boardSize - 1 && newRow > 1;
+            bool rowIsValid = newRow <= boardSize - 1 && newRow >= 1;
             (int newRow, int newCol) rightMoveField = (newRow, pawnLocation.pawnCol + 2);
             (int newRow, int newCol) leftMoveField = (newRow, pawnLocation.pawnCol - 2);
             
