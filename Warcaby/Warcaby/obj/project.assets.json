@@ -8,31 +8,24 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Ewelina\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/Users/kt/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ewelina\\Desktop\\CODECOOL\\PROJEKTY\\Warcaby_2\\Polish-draughts\\Warcaby\\Warcaby\\Warcaby.csproj",
+      "projectUniqueName": "/Users/kt/OneDrive/Codecool/Projekty/C#/Polish-draughts/Warcaby/Warcaby/Warcaby.csproj",
       "projectName": "Warcaby",
-      "projectPath": "C:\\Users\\Ewelina\\Desktop\\CODECOOL\\PROJEKTY\\Warcaby_2\\Polish-draughts\\Warcaby\\Warcaby\\Warcaby.csproj",
-      "packagesPath": "C:\\Users\\Ewelina\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ewelina\\Desktop\\CODECOOL\\PROJEKTY\\Warcaby_2\\Polish-draughts\\Warcaby\\Warcaby\\obj\\",
+      "projectPath": "/Users/kt/OneDrive/Codecool/Projekty/C#/Polish-draughts/Warcaby/Warcaby/Warcaby.csproj",
+      "packagesPath": "/Users/kt/.nuget/packages/",
+      "outputPath": "/Users/kt/OneDrive/Codecool/Projekty/C#/Polish-draughts/Warcaby/Warcaby/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Ewelina\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/kt/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -65,7 +58,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.201/RuntimeIdentifierGraph.json"
       }
     }
   }
