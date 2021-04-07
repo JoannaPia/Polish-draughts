@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Warcaby
@@ -42,7 +43,7 @@ Method CheckForWinner() checks also for draws.
             while (!isFinished)
             {
                 Round();
-                // Console.Clear();
+                //Console.Clear();
                 Console.Out.WriteLine(board.ToString());
             }
         }
@@ -53,7 +54,9 @@ Method CheckForWinner() checks also for draws.
             player = player == 2 ? 1 : 2;
             TryToMakeMove();
             CheckForWinner();
-            Console.ReadKey();
+            int sleepTime = !curentPlayer.Human ? 1000 : 0;
+            Thread.Sleep(sleepTime);
+            //Console.ReadKey();
         }
 
         public void TryToMakeMove()
