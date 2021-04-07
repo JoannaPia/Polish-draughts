@@ -15,13 +15,13 @@ namespace Warcaby
             "Invalid input! Please enter correct coordinates (e.g. a1, b2).",
         };
 
-        public void WriteMessage(string messageType)
+        public void WriteMessage(string messageType, int player = 1)
         {
             string message = null;
             switch (messageType)
             {
                 case "choosePawn":
-                    message = messagesList[0];
+                    message = $"Player's {player} move.\n" + messagesList[0];
                     break;
                 case "incorrectCoord":
                     message = messagesList[1];

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -21,10 +22,22 @@ Method CheckForWinner() checks also for draws.
         private Board board;
         private bool isFinished = false;
         private int player = 2;
+        private Player curentPlayer;
+        
+        AskForMove move = new AskForMove();
+        AI ai = new AI();
+        Menu menu = new Menu();
+        Player player1;
+        Player player2;
 
-     
+
         public void Start()
         {
+            string gameMode = menu.GameMode;
+            player1 = new Player("white", 1, gameMode.Contains("HUMAN") ? true : false);
+            player2 = new Player("black", 2, gameMode.Contains("COMPUTER") ? false : true);
+            curentPlayer = player2;
+            
             board = new Board();
             while (!isFinished)
             {
@@ -36,15 +49,19 @@ Method CheckForWinner() checks also for draws.
 
         public void Round()
         {
+            curentPlayer = curentPlayer.Equals(player2) ? player1 : player2;
             player = player == 2 ? 1 : 2;
             TryToMakeMove();
             CheckForWinner();
+            Console.ReadKey();
         }
 
         public void TryToMakeMove()
         {
-            AskForMove move = new AskForMove();
-            (int row, int col)[] moveCoordinates = move.MakeMove(board.board, board.Size, player);
+            (int row, int col)[] moveCoordinates = !curentPlayer.Human ? ai.aiMove(player, board) : move.MakeMove(board, player);
+
+
+            //(int row, int col)[] moveCoordinates = move.MakeMove(board.board, board.Size, player);
 
             if (Math.Abs(moveCoordinates[0].row - moveCoordinates[1].row) == 2 && Math.Abs(moveCoordinates[0].col - moveCoordinates[1].col) == 2)
             {

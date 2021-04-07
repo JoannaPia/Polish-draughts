@@ -8,8 +8,10 @@ namespace Warcaby
         private readonly Messages _message = new Messages();
         
         
-        public (int, int)[] MakeMove(Pawn[,] fieldsArray, int boardSize = 10, int player = 1)
+        public (int, int)[] MakeMove(Board board, int player = 1)
         {
+            Pawn[,] fieldsArray = board.board;
+            int boardSize = board.Size;
             (int row, int col) pawnToMove;
             (int, int) fieldToMoveTo;
             (int, int)[] availableMoves = new (int, int)[] {};
@@ -28,9 +30,9 @@ namespace Warcaby
                 messageText = "wrongPawn";
                 if (isValidChoice)
                 {
-                    availableMoves = GetPosibleMoves(pawnToMove, player, boardSize, fieldsArray);
+                    availableMoves = GetPosibleMoves(pawnToMove, player, board);
                     //if (pawnToMove.row > 1 && pawnToMove.row < boardSize - 2)
-                    avilableCaptures = GetPosibleCaptures(pawnToMove, player, boardSize, fieldsArray);
+                    avilableCaptures = GetPosibleCaptures(pawnToMove, player, board);
                     isEmptyList = availableMoves.Length == 0 && avilableCaptures.Length == 0;
                     messageText = isEmptyList ? "noMove" : "whereToPlace";
                 }
@@ -48,10 +50,10 @@ namespace Warcaby
                     _message.WriteMessage("unavailableMove");
             } while (!isValidChoice);
 
-            Console.Out.WriteLine("Your pawn will move to {0}", fieldToMoveTo);
+            //Console.Out.WriteLine("Your pawn will move to {0}", fieldToMoveTo);
 
             // move or capture + move in Game class method MakeMoveOrCapture
-            return result = new (int, int)[2] {pawnToMove, fieldToMoveTo};
+            return new (int, int)[2] {pawnToMove, fieldToMoveTo};
         }
         
         
@@ -136,7 +138,7 @@ namespace Warcaby
         }
         
         
-        private (int, int)[] GetPosibleMoves((int pawnRow, int pawnCol) pawnLocation, int player, int bordSize, Pawn[,] firldsArray)
+        public (int, int)[] GetPosibleMoves((int pawnRow, int pawnCol) pawnLocation, int player, Board board)
         {
             (int, int)[] possibleCoordinates;
 
@@ -144,10 +146,10 @@ namespace Warcaby
             (int, int) rightMoveField = (newRow, pawnLocation.pawnCol + 1);
             (int, int) leftMoveField = (newRow, pawnLocation.pawnCol - 1);
 
-            bool rMoveAvailable = pawnLocation.pawnCol < bordSize - 1 && isAnEmptyField(rightMoveField, firldsArray);
-            bool lMoveAvailable = pawnLocation.pawnCol > 0 && isAnEmptyField(leftMoveField, firldsArray);
+            bool rMoveAvailable = pawnLocation.pawnCol < board.Size - 1 && isAnEmptyField(rightMoveField, board);
+            bool lMoveAvailable = pawnLocation.pawnCol > 0 && isAnEmptyField(leftMoveField, board);
 
-            if (newRow >= bordSize || newRow < 0 || (!rMoveAvailable && !lMoveAvailable))
+            if (newRow >= board.Size || newRow < 0 || (!rMoveAvailable && !lMoveAvailable))
                 return possibleCoordinates = new (int, int)[] { };
             else if (rMoveAvailable && !lMoveAvailable)
                 return possibleCoordinates = new (int, int)[] {rightMoveField};
@@ -158,18 +160,20 @@ namespace Warcaby
         }
 
         
-        private bool isAnEmptyField((int row, int col) fieldCoordinates, Pawn[,] firldsArray)
+        private bool isAnEmptyField((int row, int col) fieldCoordinates, Board board)
         {
-            return (firldsArray[fieldCoordinates.row, fieldCoordinates.col] is null) ? true : false;
+            
+            if (fieldCoordinates.row < 0 || fieldCoordinates.row >= board.Size)
+                return false;
+            return (board.board[fieldCoordinates.row, fieldCoordinates.col] is null) ? true : false;
         }
 
-        private (int, int)[] GetPosibleCaptures((int pawnRow, int pawnCol) pawnLocation, int player, int boardSize,
-            Pawn[,] fieldsArray)
+        public (int, int)[] GetPosibleCaptures((int pawnRow, int pawnCol) pawnLocation, int player, Board board)
         {
             (int, int)[] possibleCoordinatesCapture;
             
             int newRow = player == 1 ? pawnLocation.pawnRow - 2 : pawnLocation.pawnRow + 2;
-            bool rowIsValid = newRow <= boardSize - 1 && newRow >= 1;
+            bool rowIsValid = newRow <= board.Size - 1 && newRow >= 1;
             (int newRow, int newCol) rightMoveField = (newRow, pawnLocation.pawnCol + 2);
             (int newRow, int newCol) leftMoveField = (newRow, pawnLocation.pawnCol - 2);
             
@@ -177,10 +181,10 @@ namespace Warcaby
             (int newRow, int newCol) rightFieldBetween = (rowBetween, pawnLocation.pawnCol + 1);
             (int newRow, int newCol) leftFieldBetween = (rowBetween, pawnLocation.pawnCol - 1);
             
-            bool rMoveAvailable = rowIsValid && rightMoveField.newCol <= boardSize - 1 && isAnEmptyField(rightMoveField, fieldsArray) && isFieldWithOppositePawn(rightFieldBetween, fieldsArray, player);
-            bool lMoveAvailable = rowIsValid && leftMoveField.newCol >= 0 && isAnEmptyField(leftMoveField, fieldsArray) && isFieldWithOppositePawn(leftFieldBetween, fieldsArray, player);
+            bool rMoveAvailable = rowIsValid && rightMoveField.newCol <= board.Size - 1 && isAnEmptyField(rightMoveField, board) && isFieldWithOppositePawn(rightFieldBetween, board, player);
+            bool lMoveAvailable = rowIsValid && leftMoveField.newCol >= 0 && isAnEmptyField(leftMoveField, board) && isFieldWithOppositePawn(leftFieldBetween, board, player);
 
-            if (newRow >= boardSize || newRow < 0 || (!rMoveAvailable && !lMoveAvailable))
+            if (newRow >= board.Size || newRow < 0 || (!rMoveAvailable && !lMoveAvailable))
             {
                 return possibleCoordinatesCapture = new (int, int)[] { };
             }
@@ -198,17 +202,17 @@ namespace Warcaby
             }
         }
 
-        private bool isFieldWithOppositePawn((int row, int col) fieldCoordinate, Pawn[,] fieldsArray, int player)
+        private bool isFieldWithOppositePawn((int row, int col) fieldCoordinate, Board board, int player)
         {
-            if (!isAnEmptyField(fieldCoordinate, fieldsArray))
+            if (!isAnEmptyField(fieldCoordinate, board))
             {
                 if (player == 1)
                 {
-                    return (!fieldsArray[fieldCoordinate.row, fieldCoordinate.col].IsWhite) ? true : false;
+                    return (!board.board[fieldCoordinate.row, fieldCoordinate.col].IsWhite) ? true : false;
                 }
                 else
                 {
-                    return (fieldsArray[fieldCoordinate.row, fieldCoordinate.col].IsWhite) ? true : false;
+                    return (board.board[fieldCoordinate.row, fieldCoordinate.col].IsWhite) ? true : false;
                 }
             }
             else
