@@ -35,6 +35,13 @@ namespace Warcaby
         {
             List<(int, int)> pawns = GetPawnList(player, board);
             (int, int) pawn;
+
+            foreach (var coord in pawns)
+            {
+                avilableCaptures = move.GetPosibleCaptures(coord, player, board);
+                if (avilableCaptures.Length != 0)
+                    return coord;
+            }
             
             do
             {
