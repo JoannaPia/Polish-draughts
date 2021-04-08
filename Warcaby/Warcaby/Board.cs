@@ -126,14 +126,31 @@ namespace Warcaby
                             {
                                 if (board[i, j].IsWhite == false)
                                 {
-                                    Console.Write("|  x  ");
+                                    if (board[i, j].IsCrowned == false)
+                                    {
+                                        Console.Write("|  x  ");
+                                    }
+                                    else
+                                    {
+                                        Console.Write("| xxx ");
+                                    }
                                 }
                                 else
                                 {
-                                    Console.Write("|");
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    Console.Write(" o o ");
-                                    Console.ResetColor();
+                                    if (board[i, j].IsCrowned == false)
+                                    {
+                                        Console.Write("|");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.Write(" o o ");
+                                        Console.ResetColor();
+                                    }
+                                    else
+                                    {
+                                        Console.Write("|");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.Write(" ooo ");
+                                        Console.ResetColor();
+                                    }
                                 }
 
                             }
@@ -192,6 +209,11 @@ namespace Warcaby
             board[nextCoordinate.row, nextCoordinate.col] = board[pawnCoordinate.row, pawnCoordinate.col];
             board[nextCoordinate.row, nextCoordinate.col].coordinates = Tuple.Create(nextCoordinate.row, nextCoordinate.col);
             board[pawnCoordinate.row, pawnCoordinate.col] = null;
+            if ((board[nextCoordinate.row, nextCoordinate.col].IsWhite == true & nextCoordinate.row == 0) |
+                    (board[nextCoordinate.row, nextCoordinate.col].IsWhite == false & nextCoordinate.row == (size - 1)))
+            {
+                board[nextCoordinate.row, nextCoordinate.col].IsCrowned = true;
+            }
         }
     }
 
