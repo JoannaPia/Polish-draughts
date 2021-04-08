@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace Warcaby
@@ -15,14 +17,15 @@ namespace Warcaby
             (int row, int col) pawnToMove;
             (int, int) fieldToMoveTo;
             (int, int)[] availableMoves = new (int, int)[] {};
-            (int, int)[] avilableCaptures = new (int, int)[] {};
-            (int, int)[] result;
+            (int, int)[] availableCaptures = new (int, int)[] {};
+            (int, int)[] availableMultipleCaptures = new (int, int)[] { };
+            // (int, int)[] result;
             string messageText;
             bool isValidChoice;
             bool isEmptyList = true;
 
             //Player selects pawn
-            _message.WriteMessage("choosePawn");
+            _message.WriteMessage("choosePawn", player);
             do
             {
                 pawnToMove = AskUserForCoordinates(boardSize, player);
@@ -32,8 +35,13 @@ namespace Warcaby
                 {
                     availableMoves = GetPosibleMoves(pawnToMove, player, board);
                     //if (pawnToMove.row > 1 && pawnToMove.row < boardSize - 2)
-                    avilableCaptures = GetPosibleCaptures(pawnToMove, player, board);
-                    isEmptyList = availableMoves.Length == 0 && avilableCaptures.Length == 0;
+                    availableCaptures = GetPosibleCaptures(pawnToMove, player, board);
+                    if (availableCaptures.Length > 0)
+                    {
+                        availableMultipleCaptures = GetPosibleMultipleCaptures(availableCaptures, player, board);
+                    }
+                    
+                    isEmptyList = availableMoves.Length == 0 && availableCaptures.Length == 0;
                     messageText = isEmptyList ? "noMove" : "whereToPlace";
                 }
 
@@ -45,7 +53,7 @@ namespace Warcaby
             do
             {
                 fieldToMoveTo = AskUserForCoordinates(boardSize, player);
-                isValidChoice = availableMoves.Contains(fieldToMoveTo) || avilableCaptures.Contains(fieldToMoveTo);
+                isValidChoice = availableMoves.Contains(fieldToMoveTo) || availableCaptures.Contains(fieldToMoveTo) || availableMultipleCaptures.Contains(fieldToMoveTo);
                 if (!isValidChoice)
                     _message.WriteMessage("unavailableMove");
             } while (!isValidChoice);
@@ -219,6 +227,26 @@ namespace Warcaby
             {
                 return false;
             }
+        }
+
+        public (int, int)[] GetPosibleMultipleCaptures((int row, int col)[] pawnsCoordinates, int player, Board board)
+        {
+            List<(int, int)> possibleCoordinatesMultipleCaptures = new List<(int, int)>();
+            
+            for (int i = 0; i < pawnsCoordinates.Length; i++)
+            {
+                (int, int)[] possibleCaptures = GetPosibleCaptures(pawnsCoordinates[i], player, board);
+                if (possibleCaptures.Length > 0)
+                {
+                    foreach (var possibleCapture in possibleCaptures)
+                    {
+                        possibleCoordinatesMultipleCaptures.Add(possibleCapture);
+                    }
+                }
+            }
+
+            (int, int)[] array = possibleCoordinatesMultipleCaptures.ToArray();
+            return array;
         }
     }
 }

@@ -62,45 +62,62 @@ Method CheckForWinner() checks also for draws.
         public void TryToMakeMove()
         {
             (int row, int col)[] moveCoordinates = !curentPlayer.Human ? ai.aiMove(player, board) : move.MakeMove(board, player);
-
+            bool isWhite = board.board[moveCoordinates[0].row, moveCoordinates[0].col].IsWhite;
 
             //(int row, int col)[] moveCoordinates = move.MakeMove(board.board, board.Size, player);
 
             if (Math.Abs(moveCoordinates[0].row - moveCoordinates[1].row) == 2 && Math.Abs(moveCoordinates[0].col - moveCoordinates[1].col) == 2)
             {
-                (int, int) pawnToCapture;
-                if (board.board[moveCoordinates[0].row, moveCoordinates[0].col].IsWhite && (moveCoordinates[0].col - moveCoordinates[1].col == -2))
-                {
-                    pawnToCapture = (moveCoordinates[0].row - 1, moveCoordinates[0].col + 1);
-                }
-                else if (board.board[moveCoordinates[0].row, moveCoordinates[0].col].IsWhite && (moveCoordinates[0].col - moveCoordinates[1].col == 2))
-                {
-                    pawnToCapture = (moveCoordinates[0].row - 1, moveCoordinates[0].col - 1);
-                }
-                else if (!board.board[moveCoordinates[0].row, moveCoordinates[0].col].IsWhite && (moveCoordinates[0].col - moveCoordinates[1].col == -2))
-                {
-                    pawnToCapture = (moveCoordinates[0].row + 1, moveCoordinates[0].col + 1);
-                }
-                else
-                {
-                    pawnToCapture = (moveCoordinates[0].row + 1, moveCoordinates[0].col - 1);
-                }
+                
+                (int, int) pawnToCapture = GetPawnToCapture(moveCoordinates[0], moveCoordinates[1], isWhite);
                 board.RemovePawn(pawnToCapture);
+            }
+            else if (Math.Abs(moveCoordinates[0].row - moveCoordinates[1].row) == 4)
+            {
+                (int, int)[] firstCaptureCoordinates = move.GetPosibleCaptures(moveCoordinates[0], player, board);
+                List<(int, int)> pawnsToCapture = new List<(int, int)>();
+                foreach (var firstCapture in firstCaptureCoordinates)
+                    {
+                        (int, int)[] secondCaptureCoordinates = move.GetPosibleCaptures(firstCapture, player, board);
+                        foreach (var secondCapture in secondCaptureCoordinates)
+                        {
+                            if (secondCapture == moveCoordinates[1])
+                            {
+                                pawnsToCapture.Add(GetPawnToCapture(moveCoordinates[0], firstCapture, isWhite));
+                                pawnsToCapture.Add(GetPawnToCapture(firstCapture, secondCapture, isWhite));
+                            }
+                        }
+                    }
+                
+                foreach (var pawnToCapture in pawnsToCapture)
+                {
+                    board.RemovePawn(pawnToCapture);
+                }
+                
             }
             board.MovePawn(moveCoordinates[0], moveCoordinates[1]);
             
         }
-
-        public void MakeMoveOrCapture((int row, int col) pawnCoordinate, (int row, int col) nextPawnCoordinate,
-            bool capture = false)
+        
+        private (int, int) GetPawnToCapture((int row, int col) pawnStartCoordinate,
+            (int row, int col) pawnStopCoordinate, bool isWhite)
         {
-            if (capture)
+            if (isWhite && pawnStartCoordinate.col - pawnStopCoordinate.col == -2)
             {
-                (int row, int col) pawnToCapture = (pawnCoordinate.row + 1, pawnCoordinate.col + 1);
-                board.RemovePawn(pawnToCapture);
+                return (pawnStartCoordinate.row - 1, pawnStartCoordinate.col + 1);
             }
-           
-            board.MovePawn(pawnCoordinate, nextPawnCoordinate);
+            else if (isWhite && pawnStartCoordinate.col - pawnStopCoordinate.col == 2)
+            {
+                return (pawnStartCoordinate.row - 1, pawnStartCoordinate.col - 1);
+            }
+            else if (!isWhite && pawnStartCoordinate.col - pawnStopCoordinate.col == -2)
+            {
+                return (pawnStartCoordinate.row + 1, pawnStartCoordinate.col + 1);
+            }
+            else
+            {
+                return (pawnStartCoordinate.row + 1, pawnStartCoordinate.col - 1);
+            }
         }
 
         public void CheckForWinner()
@@ -161,5 +178,7 @@ Method CheckForWinner() checks also for draws.
                 Console.WriteLine("************** Tied **************"); 
             }
         }
+
+        
     }
 }
