@@ -248,5 +248,142 @@ namespace Warcaby
             (int, int)[] array = possibleCoordinatesMultipleCaptures.ToArray();
             return array;
         }
+        private List<(int, int, string)> possibleMoveCrowned((int pawnRow, int pawnCol) pawnLocation, Pawn pawn, Board board)
+        {
+            int size = board.Size;
+            bool isWhite = pawn.IsWhite; //from pawn ????
+            int tempRow = pawnLocation.pawnRow;
+            int tempCol = pawnLocation.pawnCol;
+            bool isPawn = false;
+            bool nextToPawn = false;
+
+            List<(int, int, string)> possibleCooridnates = new List<(int, int, string)>();
+
+            while (((tempRow > 0) & (tempCol > 0)) | nextToPawn)
+            {
+                if (isPawn)
+                {
+                    nextToPawn = true;
+                }
+                tempRow--;
+                tempCol--;
+                if (board.board[tempRow, tempCol] != null)
+                {
+                    if (board.board[tempRow, tempCol].IsWhite != isWhite)
+                    {
+                        isPawn = true;
+                    }
+                }
+                else
+                {
+                    if (nextToPawn)
+                    {
+                        possibleCooridnates.Add((tempRow, tempCol, "--"));
+                    }
+                    else
+                    {
+                        possibleCooridnates.Add((tempRow, tempCol, ""));
+                    }
+
+                }
+            }
+            isPawn = false;
+            nextToPawn = false;
+            tempRow = pawnLocation.pawnRow;
+            tempCol = pawnLocation.pawnCol;
+            while ((tempRow > 0) & (tempCol < size - 1))
+            {
+                if (isPawn)
+                {
+                    nextToPawn = true;
+                }
+                tempRow--;
+                tempCol++;
+                if (board.board[tempRow, tempCol] != null)
+                {
+                    if (board.board[tempRow, tempCol].IsWhite != isWhite)
+                    {
+                        isPawn = true;
+                    }
+                }
+                else
+                {
+                    if (nextToPawn)
+                    {
+                        possibleCooridnates.Add((tempRow, tempCol, "-+"));
+                    }
+                    else
+                    {
+                        possibleCooridnates.Add((tempRow, tempCol, ""));
+                    }
+
+                }
+            }
+            isPawn = false;
+            nextToPawn = false;
+            tempRow = pawnLocation.pawnRow;
+            tempCol = pawnLocation.pawnCol;
+            while ((tempRow < size - 1) & (tempCol > 0))
+            {
+                if (isPawn)
+                {
+                    nextToPawn = true;
+                }
+                tempRow++;
+                tempCol--;
+                if (board.board[tempRow, tempCol] != null)
+                {
+                    if (board.board[tempRow, tempCol].IsWhite != isWhite)
+                    {
+                        isPawn = true;
+                    }
+                }
+                else
+                {
+                    if (nextToPawn)
+                    {
+                        possibleCooridnates.Add((tempRow, tempCol, "+-"));
+                    }
+                    else
+                    {
+                        possibleCooridnates.Add((tempRow, tempCol, ""));
+                    }
+
+                }
+            }
+            isPawn = false;
+            nextToPawn = false;
+            tempRow = pawnLocation.pawnRow;
+            tempCol = pawnLocation.pawnCol;
+            while ((tempRow < size - 1) & (tempCol < size - 1))
+            {
+                if (isPawn)
+                {
+                    nextToPawn = true;
+                }
+                tempRow++;
+                tempCol++;
+                if (board.board[tempRow, tempCol] != null)
+                {
+                    if (board.board[tempRow, tempCol].IsWhite != isWhite)
+                    {
+                        isPawn = true;
+                    }
+                }
+                else
+                {
+                    if (nextToPawn)
+                    {
+                        possibleCooridnates.Add((tempRow, tempCol, "++"));
+                    }
+                    else
+                    {
+                        possibleCooridnates.Add((tempRow, tempCol, ""));
+                    }
+
+                }
+            }
+            return possibleCooridnates;
+        }
     }
 }
