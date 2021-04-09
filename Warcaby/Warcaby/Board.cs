@@ -17,15 +17,45 @@ namespace Warcaby
         public int Size
         {
             get { return size; }
+            set { if ((value >= 10) && (value <= 20))
+                    {
+                    size = value;
+                    }
+                }
+                
         }
         public Board()
         {
-            Console.WriteLine("Please input the size of the board (10-20): ");
-            size = Convert.ToInt32(Console.ReadLine());
+            List<int> allowedSize = new List<int>() { 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+
+            do
+            {
+                Console.WriteLine("Please input the size of the board (10-20): ");
+                size = Convert.ToInt32(Console.ReadLine());
+            } 
+            while (!allowedSize.Contains(size));
+
             _board = new Pawn[size, size];
             InitBoard();
             Console.WriteLine(this.ToString());
         }
+
+        /*public Board(Pawn[,] pawns)
+        {
+            this._board = pawns;
+
+            List<int> allowedSize = new List<int>() { 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+
+            do
+            {
+                Console.WriteLine("Please input the size of the board (10-20): ");
+                size = Convert.ToInt32(Console.ReadLine());
+            }
+            while (!allowedSize.Contains(size));
+
+            //InitBoard();
+            Console.WriteLine(this.ToString());
+        }*/
 
         public void InitBoard()
         {

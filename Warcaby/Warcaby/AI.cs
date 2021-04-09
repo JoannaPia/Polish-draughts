@@ -42,7 +42,7 @@ namespace Warcaby
                 if (avilableCaptures.Length != 0)
                     return coord;
             }
-            
+            //tu wywala
             do
             {
                 pawn = pawns[rdm.Next(pawns.Count)];

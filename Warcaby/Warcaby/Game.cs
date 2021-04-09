@@ -24,6 +24,13 @@ Method CheckForWinner() checks also for draws.
         private bool isFinished = false;
         private int player = 2;
         private Player curentPlayer;
+        private int winner;
+
+        public Board Board
+        {
+            get { return board; }
+            set { board = value; }
+        }
         
         AskForMove move = new AskForMove();
         AI ai = new AI();
@@ -46,7 +53,28 @@ Method CheckForWinner() checks also for draws.
                 //Console.Clear();
                 Console.Out.WriteLine(board.ToString());
             }
+
+            isFinished = false;
+            Start();
         }
+
+        /*public void GameTest()
+        {
+            string gameMode = menu.GameMode;
+            player1 = new Player("white", 1, gameMode.Contains("HUMAN") ? true : false);
+            player2 = new Player("black", 2, gameMode.Contains("COMPUTER") ? false : true);
+            curentPlayer = player2;
+
+            while (!isFinished)
+            {
+                Round();
+                //Console.Clear();
+                Console.Out.WriteLine(board.ToString());
+            }
+
+            isFinished = false;
+            Start();
+        }*/
 
         public void Round()
         {
@@ -138,7 +166,7 @@ Method CheckForWinner() checks also for draws.
                     }
                 }
             }
-
+            Console.WriteLine($"Biale: {W}\tCzarne: {B}");
             ValidateResult(W, B);
         }
 
@@ -168,15 +196,20 @@ Method CheckForWinner() checks also for draws.
             if (ending == 1)
             {
                 Console.WriteLine("**************White has won**************");
+             
             }
             else if (ending == 2)
             {
                 Console.WriteLine("**************Black has won**************");
+               
             }
             else
             {
-                Console.WriteLine("************** Tied **************"); 
+                Console.WriteLine("************** Tied **************");
+             
             }
+            Console.WriteLine("Press any key to close.");
+            Console.ReadKey();
         }
 
         

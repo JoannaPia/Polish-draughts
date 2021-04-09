@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ewelina\\Desktop\\CODECOOL\\PROJEKTY\\Warcaby_2\\Polish-draughts\\Warcaby\\Warcaby\\Warcaby.csproj": {}
+    "C:\\Users\\Sebastian\\Desktop\\pt\\Polish-draughts\\Warcaby\\Warcaby\\Warcaby.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ewelina\\Desktop\\CODECOOL\\PROJEKTY\\Warcaby_2\\Polish-draughts\\Warcaby\\Warcaby\\Warcaby.csproj": {
+    "C:\\Users\\Sebastian\\Desktop\\pt\\Polish-draughts\\Warcaby\\Warcaby\\Warcaby.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ewelina\\Desktop\\CODECOOL\\PROJEKTY\\Warcaby_2\\Polish-draughts\\Warcaby\\Warcaby\\Warcaby.csproj",
+        "projectUniqueName": "C:\\Users\\Sebastian\\Desktop\\pt\\Polish-draughts\\Warcaby\\Warcaby\\Warcaby.csproj",
         "projectName": "Warcaby",
-        "projectPath": "C:\\Users\\Ewelina\\Desktop\\CODECOOL\\PROJEKTY\\Warcaby_2\\Polish-draughts\\Warcaby\\Warcaby\\Warcaby.csproj",
-        "packagesPath": "C:\\Users\\Ewelina\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ewelina\\Desktop\\CODECOOL\\PROJEKTY\\Warcaby_2\\Polish-draughts\\Warcaby\\Warcaby\\obj\\",
+        "projectPath": "C:\\Users\\Sebastian\\Desktop\\pt\\Polish-draughts\\Warcaby\\Warcaby\\Warcaby.csproj",
+        "packagesPath": "C:\\Users\\Sebastian\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Sebastian\\Desktop\\pt\\Polish-draughts\\Warcaby\\Warcaby\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Ewelina\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Sebastian\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
