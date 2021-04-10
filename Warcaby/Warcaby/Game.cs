@@ -82,7 +82,7 @@ Method CheckForWinner() checks also for draws.
             player = player == 2 ? 1 : 2;
             TryToMakeMove();
             CheckForWinner();
-            int sleepTime = !curentPlayer.Human ? 100 : 0;
+            int sleepTime = !curentPlayer.Human ? 500 : 0;
             Thread.Sleep(sleepTime);
             //Console.ReadKey();
         }

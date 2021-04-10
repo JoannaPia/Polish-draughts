@@ -35,7 +35,6 @@ namespace Warcaby
         {
             List<(int, int)> pawns = GetPawnList(player, board);
             (int, int) pawn;
-            int count = 0;
             bool noMove;
 
             foreach (var coord in pawns)
@@ -47,14 +46,16 @@ namespace Warcaby
             //tu wywala
             do
             {
-                pawn = pawns[rdm.Next(pawns.Count)];
+                int randomIndex = rdm.Next(pawns.Count);
+                pawn = pawns[randomIndex];
                 availableMoves = move.GetPosibleMoves(pawn, player, board);
                 avilableCaptures = move.GetPosibleCaptures(pawn, player, board);
                 noMove = availableMoves.Length == 0 && avilableCaptures.Length == 0;
-                count = noMove ? count + 1 : 0;
-            } while (noMove && count < 10);
+                if (noMove)
+                    pawns.RemoveAt(randomIndex);
+            } while (noMove && pawns.Count > 0);
 
-            if (count >= 10)
+            if (pawns.Count <= 0 )
                 pawn = (-1, -1);
 
                 return pawn;
