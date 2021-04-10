@@ -34,13 +34,13 @@ Method CheckForWinner() checks also for draws.
         
         AskForMove move = new AskForMove();
         AI ai = new AI();
-        Menu menu = new Menu();
         Player player1;
         Player player2;
 
 
         public void Start()
         {
+            Menu menu = new Menu();
             string gameMode = menu.GameMode;
             player1 = new Player("white", 1, gameMode.Contains("HUMAN") ? true : false);
             player2 = new Player("black", 2, gameMode.Contains("COMPUTER") ? false : true);
@@ -53,7 +53,7 @@ Method CheckForWinner() checks also for draws.
                 //Console.Clear();
                 Console.Out.WriteLine(board.ToString());
             }
-
+            
             isFinished = false;
             Start();
         }
@@ -82,7 +82,7 @@ Method CheckForWinner() checks also for draws.
             player = player == 2 ? 1 : 2;
             TryToMakeMove();
             CheckForWinner();
-            int sleepTime = !curentPlayer.Human ? 1000 : 0;
+            int sleepTime = !curentPlayer.Human ? 100 : 0;
             Thread.Sleep(sleepTime);
             //Console.ReadKey();
         }
@@ -90,21 +90,29 @@ Method CheckForWinner() checks also for draws.
         public void TryToMakeMove()
         {
             (int row, int col)[] moveCoordinates = !curentPlayer.Human ? ai.aiMove(player, board) : move.MakeMove(board, player);
-            bool isWhite = board.board[moveCoordinates[0].row, moveCoordinates[0].col].IsWhite;
 
-            //(int row, int col)[] moveCoordinates = move.MakeMove(board.board, board.Size, player);
-
-            if (Math.Abs(moveCoordinates[0].row - moveCoordinates[1].row) == 2 && Math.Abs(moveCoordinates[0].col - moveCoordinates[1].col) == 2)
+            if (moveCoordinates[0] == (-1, -1))
             {
-                
-                (int, int) pawnToCapture = GetPawnToCapture(moveCoordinates[0], moveCoordinates[1], isWhite);
-                board.RemovePawn(pawnToCapture);
+                isFinished = true;
             }
-            else if (Math.Abs(moveCoordinates[0].row - moveCoordinates[1].row) == 4)
+            else
             {
-                (int, int)[] firstCaptureCoordinates = move.GetPosibleCaptures(moveCoordinates[0], player, board);
-                List<(int, int)> pawnsToCapture = new List<(int, int)>();
-                foreach (var firstCapture in firstCaptureCoordinates)
+                bool isWhite = board.board[moveCoordinates[0].row, moveCoordinates[0].col].IsWhite;
+
+                //(int row, int col)[] moveCoordinates = move.MakeMove(board.board, board.Size, player);
+
+                if (Math.Abs(moveCoordinates[0].row - moveCoordinates[1].row) == 2 &&
+                    Math.Abs(moveCoordinates[0].col - moveCoordinates[1].col) == 2)
+                {
+
+                    (int, int) pawnToCapture = GetPawnToCapture(moveCoordinates[0], moveCoordinates[1], isWhite);
+                    board.RemovePawn(pawnToCapture);
+                }
+                else if (Math.Abs(moveCoordinates[0].row - moveCoordinates[1].row) == 4)
+                {
+                    (int, int)[] firstCaptureCoordinates = move.GetPosibleCaptures(moveCoordinates[0], player, board);
+                    List<(int, int)> pawnsToCapture = new List<(int, int)>();
+                    foreach (var firstCapture in firstCaptureCoordinates)
                     {
                         (int, int)[] secondCaptureCoordinates = move.GetPosibleCaptures(firstCapture, player, board);
                         foreach (var secondCapture in secondCaptureCoordinates)
@@ -116,14 +124,16 @@ Method CheckForWinner() checks also for draws.
                             }
                         }
                     }
-                
-                foreach (var pawnToCapture in pawnsToCapture)
-                {
-                    board.RemovePawn(pawnToCapture);
+
+                    foreach (var pawnToCapture in pawnsToCapture)
+                    {
+                        board.RemovePawn(pawnToCapture);
+                    }
+
                 }
-                
+
+                board.MovePawn(moveCoordinates[0], moveCoordinates[1]);
             }
-            board.MovePawn(moveCoordinates[0], moveCoordinates[1]);
             
         }
         
@@ -187,8 +197,13 @@ Method CheckForWinner() checks also for draws.
                 printEndScreen(1);
                 isFinished = true;
             }
-
-            isFinished = false;
+            else if (isFinished)
+            {
+                printEndScreen(4);
+                isFinished = true;
+            }
+            else
+                isFinished = false;
         }
 
         private void printEndScreen(int ending)
@@ -202,6 +217,10 @@ Method CheckForWinner() checks also for draws.
             {
                 Console.WriteLine("**************Black has won**************");
                
+            }
+            else if (ending == 4)
+            {
+                Console.Out.WriteLine("Player {0} has no more moves. \nPlayer {1} win", player, player == 1 ? 2 : 1);
             }
             else
             {

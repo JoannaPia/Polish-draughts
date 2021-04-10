@@ -15,17 +15,17 @@ namespace Warcaby
         public (int, int)[] aiMove(int player, Board board)
         {
             (int, int) fieldToMoveTo = (-1, -1);
-            
+
             (int, int) pawn = ChooseRandomPawn(player, board);
 
-            do
+            while (fieldToMoveTo == (-1, -1) && pawn != (-1, -1))
             {
                 fieldToMoveTo = avilableCaptures.Length != 0
                     ? avilableCaptures[rdm.Next(avilableCaptures.Length)]
                     : (availableMoves.Length != 0
                         ? availableMoves[rdm.Next(availableMoves.Length)]
                         : (-1, -1));
-            } while (fieldToMoveTo == (-1, -1));
+            }
 
 
             return new (int, int)[2] {pawn, fieldToMoveTo};
@@ -35,6 +35,8 @@ namespace Warcaby
         {
             List<(int, int)> pawns = GetPawnList(player, board);
             (int, int) pawn;
+            int count = 0;
+            bool noMove;
 
             foreach (var coord in pawns)
             {
@@ -48,9 +50,14 @@ namespace Warcaby
                 pawn = pawns[rdm.Next(pawns.Count)];
                 availableMoves = move.GetPosibleMoves(pawn, player, board);
                 avilableCaptures = move.GetPosibleCaptures(pawn, player, board);
-            } while (availableMoves.Length == 0 && avilableCaptures.Length == 0);
-            
-            return pawn;
+                noMove = availableMoves.Length == 0 && avilableCaptures.Length == 0;
+                count = noMove ? count + 1 : 0;
+            } while (noMove && count < 10);
+
+            if (count >= 10)
+                pawn = (-1, -1);
+
+                return pawn;
         }
 
 
