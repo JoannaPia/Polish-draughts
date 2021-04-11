@@ -166,7 +166,7 @@ namespace Warcaby
                                     else
                                     {
                                         Console.Write("|");
-                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.ForegroundColor = ConsoleColor.Blue;
                                         Console.Write(" xxx ");
                                         Console.ResetColor();
                                     }
