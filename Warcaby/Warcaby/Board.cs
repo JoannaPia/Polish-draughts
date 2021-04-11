@@ -158,11 +158,17 @@ namespace Warcaby
                                 {
                                     if (board[i, j].IsCrowned == false)
                                     {
-                                        Console.Write("|  x  ");
+                                        Console.Write("|");
+                                        Console.ForegroundColor = ConsoleColor.Blue;
+                                        Console.Write("  x  ");
+                                        Console.ResetColor();
                                     }
                                     else
                                     {
-                                        Console.Write("| xxx ");
+                                        Console.Write("|");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.Write(" xxx ");
+                                        Console.ResetColor();
                                     }
                                 }
                                 else
@@ -203,7 +209,10 @@ namespace Warcaby
                             {
                                 if (board[i, j].IsWhite == false)
                                 {
-                                    Console.Write("| x x ");
+                                    Console.Write("|");
+                                    Console.ForegroundColor = ConsoleColor.Blue;
+                                    Console.Write(" xxx ");
+                                    Console.ResetColor();
                                 }
                                 else
                                 {

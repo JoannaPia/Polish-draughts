@@ -50,7 +50,7 @@ Method CheckForWinner() checks also for draws.
             while (!isFinished)
             {
                 Round();
-                //Console.Clear();
+                Console.Clear();
                 Console.Out.WriteLine(board.ToString());
             }
             
